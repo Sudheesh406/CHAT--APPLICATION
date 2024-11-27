@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5; 
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: #1877F2; 
+    color: white;
+    align-items: center;
+}
+
+.username h3 {
+    font-size: 1.2em;
+}
+
+.menu {
+    position: relative;
+}
+
+.dropdown-btn {
+    padding-left: 30px;
+    padding-right: 30px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background-color: white;
+    color: #333;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    width: 150px;
+    z-index: 10;
+}
+
+.dropdown-menu a {
+    color: #1877F2;
+    text-decoration: none;
+    padding: 8px;
+    display: block;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f0f2f5;
+}
+
+.main-content {
+    display: flex;
+    height: calc(100vh - 60px); 
+}
+
+.contacts {
+    width: 300px; 
+    background-color: white;
+    padding: 20px;
+    border-right: 2px solid #ddd;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.contact-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.new-group-btn {
+    background-color: #1877F2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.new-group-btn:hover {
+    background-color: #0056D2;
+}
+
+.contact-list {
+    list-style-type: none;
+    margin-top: 20px;
+}
+.GP{
+    list-style-type: none;
+}
+
+.contact {
+    padding: 12px;
+    margin-bottom: 10px;
+    background-color: #f0f2f5;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.contact:hover {
+    background-color: #e4e6eb;
+}
+
+.hide {
+    display: none;
+}
+
+.messages {
+    flex: 1; 
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.message-header h2 {
+    color: #1877F2;
+}
+
+.message-container {
+    margin-top: 30px;
+    padding: 20px;
+    height: calc(100% - 60px);
+}
+
+.message-container p {
+    font-size: 1.2em;
+    color: #333;
+    justify-content: center;
+    display: flex;
+}
+
+.message-input-container {
+    display: none;
+    align-items: center;
+    padding: 10px;
+    background-color: #f0f2f5; /* Matches the chat background */
+    border-top: 1px solid #ddd; /* Adds a subtle border */
+}
+
+.message-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 1em;
+    margin-right: 10px;
+    outline: none;
+}
+
+.send-button {
+    padding: 10px 20px;
+    background-color: #d3d3d3; /* Light gray color */
+    border: none;
+    border-radius: 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.send-button:hover {
+    background-color: #bcbcbc; /* Darker gray on hover */
+}
+
+.send-button:active {
+    background-color: #a9a9a9; /* Even darker gray on click */
+}
+
+.message_div{
+    height: 90%;
+}
+
+.messages_Ul{
+    list-style: none;
+}
+
+.sender{
+    background-color: #dcf8c6;
+    align-self: flex-end;
+    justify-self: end;
+    max-width: 50%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    width: fit-content;
+}
+
+.receiver{
+    background-color:#1877F2;
+    align-self: flex-end;
+    justify-self: start;
+    max-width: 50%;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 15px;
+    width: fit-content;
+}
+
+.group-creation {
+    font-size: 1.2em;
+    position: absolute;
+    top: 110px;
+    left: 3px;
+    background-color:#fff;
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+    width: 290px;
+    margin: 20px auto;
+    color: #1877F2;
+    font-weight: 700;
+}
+
+.group-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+}
+
+.list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.list li:hover {
+    background-color:#a9a9a9;
+}
+  
+ 
+  

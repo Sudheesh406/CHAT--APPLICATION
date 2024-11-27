@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <div class="header">
+        <div class="username">
+            <h3>Welcome, <span id="username"><%= name %></span></h3> <!-- Dynamic username here -->
+        </div>
+        <div class="menu">
+            <button class="dropdown-btn" id="dropdown-btn">⋮</button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="/logout" id="logoutBtn">Logout</a>
+                <a href="#">Settings</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        <div class="contacts">
+            <div class="contact-header">
+                <h2 id="contacts-title" class="toggle-title">Contacts</h2>
+                <button class="new-group-btn" id="new-group-btn">New Group</button>
+            </div>
+            <ul id="contact-list" class="contact-list">
+                <% contactArray.forEach((contact) => { %>
+                    <li id="contact_li" class="contact" onclick="selectedUser('<%= contact.username %>','<%= contact._id %>')" ><%= contact.username %></li> 
+                <% }) %>
+            </ul>
+            <ul class="GP">
+                <% if (groups) { %>
+                    <% groups.forEach((group) => { %>
+                        <li id="contact_li" class="contact"  onclick="selectedGroup('<%= group.name %>','<%= group._id %>')" ><%= group.name %></li> 
+                    <% }) %>
+                  <% }%>  
+            </ul>
+        </div>
+        
+        <div class="messages">
+            <div class="message-header">
+                <h2 id="selectedUser">Messages</h2>
+            </div>
+            <div class="message-container">
+                <p id="startAMsg">Click a contact or group to start chatting!</p>
+
+                <div class="message_div"> 
+                    <ul class="messages_Ul" id="messages_Ul">
+                       
+                     </ul>
+                </div>
+
+                <div class="group-creation" id="group-creation">
+                    <!-- Group Name Field -->
+                     <h6 id="groupSelect"> </h6>
+                    <label for="group-name">Group Name:</label>
+                    <input type="text" id="group-name" placeholder="Enter group name" class="group-input">
+                    <!-- Contacts List -->
+                    <label for="list">Select Contacts:</label>
+                    <ul id="list" class="list">
+                      <% contactArray.forEach((contact) => { %>
+                        <li id="contact_li" class="contact" onclick="GroupMember('<%= contact.username %>','<%= contact._id %>')" ><%= contact.username %></li> 
+                    <% }) %>
+                    </ul>
+                    <button Class="new-group-btn" id="createGroupBtn">Create</button>
+                  </div>
+                <div class="message-input-container" id="message-input-container">
+                    <input type="text" placeholder="Type your message..." class="message-input" id="message-input">
+                    <button class="send-button" id="send-button">Send</button>
+                </div>  
+            </div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/home.js"></script>
+</body>
+</html>
