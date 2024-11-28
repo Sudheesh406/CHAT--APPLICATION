@@ -8,7 +8,6 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -23,5 +22,6 @@
     "nodemon": "^3.1.7",
     "socket.io": "^4.8.1",
     "sweetalert": "^2.1.2"
-  }
+  },
+  "description": ""
 }

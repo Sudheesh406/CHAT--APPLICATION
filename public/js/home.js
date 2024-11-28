@@ -57,9 +57,7 @@ async function selectedGroup(name,id) {
 async function gpchat(data) {
   try {
     let id ={id:data}
-    console.log("id:",id);
-    
-    let response = await fetch("http://localhost:5000/chat/GpChat",{
+    let response = await fetch("http://65.0.199.81:5000/chat/GpChat",{
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -69,14 +67,11 @@ async function gpchat(data) {
 
     let result = await response.json()
     if(result){
-
-      console.log(result);
       document.getElementById("messages_Ul").innerHTML = "";
             chatId = await result.id;
             receiverArray = await result.users
             let msg = await result.messages
             if(msg){
-              console.log("msg",msg);
               msg.forEach((element) => {
                 let li = document.createElement("li");
                 li.innerText = element.content; 
@@ -98,7 +93,7 @@ async function gpchat(data) {
 
 async function allChat(data) {  
   try {
-    let response = await fetch("http://localhost:5000/chat/createChat", {
+    let response = await fetch("http://65.0.199.81:5000/chat/createChat", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -108,16 +103,13 @@ async function allChat(data) {
         if (response) {
           let result = await response.json();          
           if (result) {
-            console.log("result :",result);
             document.getElementById("messages_Ul").innerHTML = "";
             chatId = await  result.id;
             let msg =  await result.messages
             
             if(msg){
                 msg.forEach((element) => {
-               console.log(activeUser.toString(),"logedin user",element.senderId.toString(),"sender");
               if (element.senderId.toString() === activeUser.toString()) {
-                console.log("matched");
                 let li = document.createElement("li");
                 li.innerText = element.content;
                 li.classList.add("sender");
@@ -153,7 +145,6 @@ document.getElementById("send-button").addEventListener("click",async () => {
   if(receiverArray){
     document.getElementById("messages_Ul").appendChild(li);
     socket.emit("groupmessage", { receiverArray, message});
-    console.log("emited emited ");
     receiverGroup = null
     messageSend(message, chatId);
   }
@@ -163,10 +154,8 @@ document.getElementById("send-button").addEventListener("click",async () => {
 
 async function messageSend(content, id) {
   let data = { content, id };
-console.log("messageSend id :",id);
-
   try {
-    let response = await fetch("http://localhost:5000/chat/msgSave", {
+    let response = await fetch("http://65.0.199.81:5000/chat/msgSave", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -195,7 +184,6 @@ socket.on("receiveMessage", (data) => {
 
 socket.on("receiverArrayMessage", (data) => {
   data.array.forEach((element)=>{
-    console.log("data.message:",data.message);
     if (activeUser == element) {
       if(receiverId){
         if(receiverId == GPchatId){
@@ -225,10 +213,9 @@ document.getElementById("new-group-btn").addEventListener("click", () => {
 
 async function userDetail() {
   try {
-    let data = await fetch("http://localhost:5000/chat/userdetail");
+    let data = await fetch("http://65.0.199.81:5000/chat/userdetail");
     if (data) {
       activeUser = await data.json();
-      console.log("User found :", activeUser);
       socket.emit("userId", activeUser);
     }
   } catch (error) {
@@ -242,9 +229,7 @@ let allName = []
 let allId = []
 function GroupMember(name ,id) {
   let result = allId.find((element)=>element == id)
-  if(result){
-    console.log("isExist");
-  }else{
+  if(!result){
     allId.push(id)
     allName.push(name)
   }
@@ -255,7 +240,6 @@ function displayMembers(){
     document.getElementById('groupSelect').innerHTML=''
     allName.forEach((element)=>{
     document.getElementById('groupSelect').innerText += element + ","
-    console.log("elements:",element);
   })
   
 }
@@ -265,7 +249,6 @@ document.getElementById('createGroupBtn').addEventListener('click',()=>{
  document.getElementById('group-name').value =''
  if(groupName && allId.length >= 1){
    sendGroupDetails(groupName,allId)
-   console.log(allId);
    let li = document.createElement('li')
    li.classList.add("contact");
    li.innerText = groupName
@@ -274,7 +257,6 @@ document.getElementById('createGroupBtn').addEventListener('click',()=>{
   document.getElementById("selectedUser").innerText = groupName
   document.getElementById("message-input-container").style.display = "flex";
   document.getElementById("startAMsg").style.display = "none";
-  console.log(groupName);
 })
 
  document.getElementById("contact-list").appendChild(li)
@@ -286,9 +268,8 @@ document.getElementById('createGroupBtn').addEventListener('click',()=>{
 
 async function sendGroupDetails(gpNm,ids) {
   let data = {gpNm,ids}
-  console.log("data:",data);
   try {
-    let response = await fetch("http://localhost:5000/chat/sendGPDtl",{
+    let response = await fetch("http://65.0.199.81:5000/chat/sendGPDtl",{
       method: 'post',
       headers: {
         "Content-Type": "application/json"  
@@ -298,8 +279,6 @@ async function sendGroupDetails(gpNm,ids) {
     let result = await response.json()
     if(result){
       console.log("group details posted successfully...");
-      console.log("result:",result.id);
-      
     }
     
   } catch (error) {
@@ -311,7 +290,7 @@ async function sendGroupDetails(gpNm,ids) {
 async function GroupChatId (groupName) {
   let data = {groupName}
   try {
-    let response = await fetch('http://localhost:5000/chat/groupchatId',{
+    let response = await fetch('http://65.0.199.81:5000/chat/groupchatId',{
       method:'post',
       headers:{
         "Content-Type": "application/json"
@@ -320,7 +299,6 @@ async function GroupChatId (groupName) {
     })
     let result = await response.json()
     if(result){
-      console.log('result.id:',result.id);
       chatId = result.id
       console.log("posted successfully for get groupChatId..");
     }
