@@ -6,7 +6,7 @@ const chat = require('../models/chatSchema')
 async function auth(req,res,next) {
     let token = req.cookies?.token
     if(!token){
-        res.redirect('/login')
+       return res.redirect('/login')
     }else{
         try {
             let user = jwt.verify(token,process.env.SECRETKEY);
@@ -18,7 +18,7 @@ async function auth(req,res,next) {
             }           
         } catch (error) {  
             console.error(error,"authentication found some error");
-                             
+            return res.redirect('/login');
         }
     }
 }
