@@ -60,7 +60,7 @@ async function selectedUser(name, id) {
 async function gpchat(data) {
   try {
     let id ={id:data}
-    let response = await fetch("http://localhost:5000/chat/GpChat",{
+    let response = await fetch("https://your-app-name.onrender.com/chat/GpChat",{
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +96,7 @@ async function gpchat(data) {
 
 async function allChat(data) {  
   try {
-    let response = await fetch("http://localhost:5000/chat/createChat", {
+    let response = await fetch("https://your-app-name.onrender.com/chat/createChat", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -133,9 +133,6 @@ async function allChat(data) {
   }
 }
 
-
-//sucess but the problem is only can see message when user click the group
-
 document.getElementById("send-button").addEventListener("click",async () => {
   let message = document.getElementById("message-input").value;
   document.getElementById("message-input").value = "";
@@ -161,7 +158,7 @@ document.getElementById("send-button").addEventListener("click",async () => {
 async function messageSend(content, id) {
   let data = { content, id };
   try {
-    let response = await fetch("http://localhost:5000/chat/msgSave", {
+    let response = await fetch("https://your-app-name.onrender.com/chat/msgSave", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -218,7 +215,7 @@ document.getElementById("new-group-btn").addEventListener("click", () => {
 
 async function userDetail() {
   try {
-    let data = await fetch("http://localhost:5000/chat/userdetail");
+    let data = await fetch("https://your-app-name.onrender.com/chat/userdetail");
     if (data) {
       activeUser = await data.json();
       socket.emit("userId", activeUser);
@@ -263,7 +260,7 @@ document.getElementById('createGroupBtn').addEventListener('click',()=>{
 async function sendGroupDetails(gpNm,ids) {
   let data = {gpNm,ids}
   try {
-    let response = await fetch("http://localhost:5000/chat/sendGPDtl",{
+    let response = await fetch("https://your-app-name.onrender.com/chat/sendGPDtl",{
       method: 'post',
       headers: {
         "Content-Type": "application/json"  
@@ -298,7 +295,7 @@ async function sendGroupDetails(gpNm,ids) {
 async function GroupChatId (groupName) {
   let data = {groupName}
   try {
-    let response = await fetch('http://localhost:5000/chat/groupchatId',{
+    let response = await fetch('https://your-app-name.onrender.com/chat/groupchatId',{
       method:'post',
       headers:{
         "Content-Type": "application/json"
