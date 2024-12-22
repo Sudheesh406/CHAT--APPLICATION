@@ -19,13 +19,15 @@ app.use(cookieParser())
 app.use('/',userRoute)
 app.use('/chat',chatRoute)
 
-let server = app.listen(process.env.PORT,(err)=>{
-   if(err){
-      console.error(err);
-   }else{
-   console.log('server running successfully...');
-   }
-})
+const port = process.env.PORT || 3000; 
+let server = app.listen(port, (err) => {
+    if (err) {
+        console.error('Error starting server:', err);
+    } else {
+        console.log(`Server running successfully on port ${port}...`);
+    }
+});
+
 
 const io = require('socket.io')(server)
 io.on('connection', (socket) => {
