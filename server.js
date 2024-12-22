@@ -19,7 +19,7 @@ app.use(cookieParser())
 app.use('/',userRoute)
 app.use('/chat',chatRoute)
 
-const port = process.env.PORT || 3000; 
+const port = process.env.PORT || 5000; 
 let server = app.listen(port, (err) => {
     if (err) {
         console.error('Error starting server:', err);
