@@ -34,7 +34,7 @@
             <ul class="GP">
                 <% if (groups) { %>
                     <% groups.forEach((group) => { %>
-                        <li id="contact_li" class="contact"  onclick="selectedGroup('<%= group.name %>','<%= group._id %>')" ><%= group.name %></li> 
+                        <li id="contact_li" class="contact" onclick="selectedGroup('<%= group.name %>','<%= group._id %>')" ><%= group.name %></li> 
                     <% }) %>
                   <% }%>  
             </ul>
@@ -51,6 +51,7 @@
                     <ul class="messages_Ul" id="messages_Ul">
                        
                      </ul>
+                   
                 </div>
 
                 <div class="group-creation" id="group-creation">

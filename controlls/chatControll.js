@@ -57,6 +57,7 @@ async function saveMessages(req,res){
     let result = await allMessage.create({chatId : id,senderId : senderId,content:content})
     if(result){
       console.log("message created successfully...",result);
+      res.status(201).json({message:result.content})
     }
   } catch (error) {
     console.error("error found in meessage saving",error);
@@ -84,6 +85,8 @@ async function groupDetails(req,res) {
     let newChat = await chat.create({name:GroupName,isGroupChat:true,users:GroupIds,})
     if(newChat){
         console.log('newchat created successfully...');
+        res.status(201).json({group: newChat})
+        console.log("newChat :",newChat);
         
     }else{
         console.error('error found in create newChat');

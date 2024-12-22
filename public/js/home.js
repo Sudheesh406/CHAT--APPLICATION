@@ -2,6 +2,7 @@ const socket = io();
 let activeUser;
 let chatId;
 let GPchatId
+let newGroup
 document.addEventListener("DOMContentLoaded", () => {
   const logoutBtn = document.getElementById("logoutBtn");
 
@@ -40,10 +41,11 @@ async function selectedUser(name, id) {
   }
 }
 
-let selectedGPName
-let receiverGroup
-async function selectedGroup(name,id) {
-  receiverId = id
+  let selectedGPName
+  let receiverGpId
+  async function selectedGroup(name,id) {
+    receiverGpId = id
+    receiverId = null
   selectedGPName = name;
   document.getElementById("message-input-container").style.display = "flex";
   document.getElementById("startAMsg").style.display = "none";
@@ -51,13 +53,14 @@ async function selectedGroup(name,id) {
     document.getElementById("selectedUser").innerText = selectedGPName;
   }
   GPchatId = id
+  
   gpchat(id)
 }
 
 async function gpchat(data) {
   try {
     let id ={id:data}
-    let response = await fetch("http://65.0.199.81:5000/chat/GpChat",{
+    let response = await fetch("http://localhost:5000/chat/GpChat",{
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -93,7 +96,7 @@ async function gpchat(data) {
 
 async function allChat(data) {  
   try {
-    let response = await fetch("http://65.0.199.81:5000/chat/createChat", {
+    let response = await fetch("http://localhost:5000/chat/createChat", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -130,6 +133,9 @@ async function allChat(data) {
   }
 }
 
+
+//sucess but the problem is only can see message when user click the group
+
 document.getElementById("send-button").addEventListener("click",async () => {
   let message = document.getElementById("message-input").value;
   document.getElementById("message-input").value = "";
@@ -137,25 +143,25 @@ document.getElementById("send-button").addEventListener("click",async () => {
     let li = document.createElement("li");
     li.innerText = message;
     li.classList.add("sender");
-    if(receiverId != GPchatId){
+    if(receiverId){
       document.getElementById("messages_Ul").appendChild(li);
       socket.emit("message & receiverId", { receiverId, message});
       messageSend(message, chatId);
-  }
+  }else
   if(receiverArray){
     document.getElementById("messages_Ul").appendChild(li);
     socket.emit("groupmessage", { receiverArray, message});
-    receiverGroup = null
     messageSend(message, chatId);
   }
     }
 
 });
 
+
 async function messageSend(content, id) {
   let data = { content, id };
   try {
-    let response = await fetch("http://65.0.199.81:5000/chat/msgSave", {
+    let response = await fetch("http://localhost:5000/chat/msgSave", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -182,17 +188,16 @@ socket.on("receiveMessage", (data) => {
   }
 });
 
+
 socket.on("receiverArrayMessage", (data) => {
   data.array.forEach((element)=>{
     if (activeUser == element) {
-      if(receiverId){
-        if(receiverId == GPchatId){
+      if(receiverGpId){
           let li = document.createElement("li");
           li.innerText = data.message;
           li.classList.add("receiver");
           document.getElementById("messages_Ul").appendChild(li); 
-        }
-      } 
+      }
   }
   })
 });
@@ -213,7 +218,7 @@ document.getElementById("new-group-btn").addEventListener("click", () => {
 
 async function userDetail() {
   try {
-    let data = await fetch("http://65.0.199.81:5000/chat/userdetail");
+    let data = await fetch("http://localhost:5000/chat/userdetail");
     if (data) {
       activeUser = await data.json();
       socket.emit("userId", activeUser);
@@ -249,17 +254,6 @@ document.getElementById('createGroupBtn').addEventListener('click',()=>{
  document.getElementById('group-name').value =''
  if(groupName && allId.length >= 1){
    sendGroupDetails(groupName,allId)
-   let li = document.createElement('li')
-   li.classList.add("contact");
-   li.innerText = groupName
-   li.addEventListener('click',()=>{
-   GroupChatId(groupName)
-  document.getElementById("selectedUser").innerText = groupName
-  document.getElementById("message-input-container").style.display = "flex";
-  document.getElementById("startAMsg").style.display = "none";
-})
-
- document.getElementById("contact-list").appendChild(li)
  }
  document.getElementById('group-creation').style.display='none'
  document.getElementById("new-group-btn").innerText = "NEW Group";
@@ -269,7 +263,7 @@ document.getElementById('createGroupBtn').addEventListener('click',()=>{
 async function sendGroupDetails(gpNm,ids) {
   let data = {gpNm,ids}
   try {
-    let response = await fetch("http://65.0.199.81:5000/chat/sendGPDtl",{
+    let response = await fetch("http://localhost:5000/chat/sendGPDtl",{
       method: 'post',
       headers: {
         "Content-Type": "application/json"  
@@ -279,6 +273,20 @@ async function sendGroupDetails(gpNm,ids) {
     let result = await response.json()
     if(result){
       console.log("group details posted successfully...");
+      newGroup = result
+  let li = document.createElement('li')
+  li.classList.add("contact");
+  li.innerText = result.group.name
+  li.addEventListener('click',()=>{
+  GroupChatId(result.group.name)
+  gpchat(result.group._id)
+  document.getElementById("selectedUser").innerText = result.group.name
+  document.getElementById("message-input-container").style.display = "flex";
+  document.getElementById("startAMsg").style.display = "none";
+})
+
+ document.getElementById("contact-list").appendChild(li)
+      
     }
     
   } catch (error) {
@@ -290,7 +298,7 @@ async function sendGroupDetails(gpNm,ids) {
 async function GroupChatId (groupName) {
   let data = {groupName}
   try {
-    let response = await fetch('http://65.0.199.81:5000/chat/groupchatId',{
+    let response = await fetch('http://localhost:5000/chat/groupchatId',{
       method:'post',
       headers:{
         "Content-Type": "application/json"
