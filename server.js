@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
        console.log("data from sender:", data);
        let array = receiverArray.filter((element)=>(element != senderId))
        array.forEach((element) => {
-           io.to(element).emit('receiverArrayMessage', {  senderId, message, array});       
+           io.to(element).emit('receiverArrayMessage', {senderId, message, array});       
        });
    });
 

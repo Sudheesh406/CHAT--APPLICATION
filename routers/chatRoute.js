@@ -9,7 +9,7 @@ router.post('/msgSave',auth,saveMessages)
 router.post('/sendGPDtl',auth,groupDetails)
 router.post('/groupchatId',groupChatId)
 router.post('/GpChat',findGPChat)
-
+ 
 
 
 module.exports = router
