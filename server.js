@@ -6,7 +6,7 @@ const userRoute = require('./routers/userRoute');
 const chatRoute = require('./routers/chatRoute')
 const cookieParser = require('cookie-parser');
 const connection = require('./database/db')
-
+const cors = require("cors");
 connection()
 
 app.use(express.static(path.join(__dirname,'public')))  
@@ -18,6 +18,14 @@ app.set('views',path.join(__dirname,"views"))
 app.use(cookieParser())
 app.use('/',userRoute)
 app.use('/chat',chatRoute)
+app.use(cors())
+
+app.use(cors({
+  origin: "https://chat-application-thg6.onrender.com", 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
 
 const port = process.env.PORT || 5000; 
 let server = app.listen(port, (err) => {
