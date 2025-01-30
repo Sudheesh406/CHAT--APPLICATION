@@ -18,12 +18,11 @@ app.set('views',path.join(__dirname,"views"))
 app.use(cookieParser())
 app.use('/',userRoute)
 app.use('/chat',chatRoute)
-app.use(cors())
+
+
 
 app.use(cors({
-  origin: "https://chat-application-thg6.onrender.com", 
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: "https://chat-application-thg6.onrender.com"
 }));
 
 

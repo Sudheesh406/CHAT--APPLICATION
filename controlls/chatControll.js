@@ -115,15 +115,15 @@ async function groupChatId(req,res) {
 
 async function displayGroups(loginUser) {
   try {
-    console.log("Finding groups for user:", loginUser); // Debug user ID
+    console.log("Finding groups for user:", loginUser); 
     let allGroups = await chat.find({
       isGroupChat: true,
       users: { $in: [new mongoose.Types.ObjectId(loginUser)] },
     });
-    console.log("Groups found:", allGroups); // Debug query result
+    console.log("Groups found:", allGroups); 
     return allGroups;
   } catch (error) {
-    console.error("Error in displayGroups:", error); // Log error details
+    console.error("Error in displayGroups:", error); 
     return [];
   }
 }
